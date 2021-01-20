@@ -5,7 +5,7 @@ def index(request):
     return render(request, 'shop/index.html')
 
 def about(request):
-    return render(request, 'shop/about.html')
+    return render(request, 'pages/about.html')
 
 def contact(request):
-    return render(request, 'shop/contact.html')
+    return render(request, 'pages/contact.html')
