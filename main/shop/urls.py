@@ -1,9 +1,8 @@
 from django.urls import path
 from .views import *
+from django.contrib.flatpages import views
 
 urlpatterns = [
     path('', index, name='index'),
-    path('pages/', index, name='index'),
-    path('pages/about/', about, name='about'),
-    path('pages/contact/', contact, name='contact'),
+    path('<path:url>', views.flatpage),
 ]
