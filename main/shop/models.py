@@ -9,7 +9,8 @@ from django.db import models
 
 class Shop(models.Model):
     product = models.CharField(max_length=100, verbose_name = 'Навание товара')
-    seller = models.TextField(blank=True)
+    description = models.TextField(blank=True)
+    seller = models.CharField(max_length=100, verbose_name = 'Имя продавца')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
     tags = models.ForeignKey('Tags', on_delete=models.PROTECT, null=True)
 
