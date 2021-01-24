@@ -22,3 +22,9 @@ product2.pk
 #проверка запроса к базе данных
 from django.db import connection
 connection.queries
+
+
+
+from shop.models import Shop
+Shop.objects.all()
+Shop.objects.filter(product='кофта')
