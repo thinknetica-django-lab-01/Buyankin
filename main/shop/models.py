@@ -13,6 +13,7 @@ class Shop(models.Model):
     seller = models.CharField(max_length=100, verbose_name = 'Имя продавца')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
     tags = models.ForeignKey('Tags', on_delete=models.PROTECT, null=True)
+    price = models.IntegerField(default=0, blank=False)
 
     def __str__(self):
         return self.product
