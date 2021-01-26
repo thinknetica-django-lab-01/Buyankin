@@ -30,5 +30,5 @@ seller1 = Seller.objects.create(name='Иван', description='Обо мне я �
 seller2 = Seller.objects.create(name='Мария', description='Обо мне я Мария')
 
 from shop.models import Product
-product1 = Product.objects.create(title='Майка первая', slug='mayka-pervaya')
-product1 = Product.objects.create(title='Майка вторая', slug='mayka-vtoraya')
+product1 = Product.objects.create(title='Майка первая', slug='mayka-pervaya', description='Коллаборация Billabong x Metallica - это часть проекта Billabong LAB')
+product2 = Product.objects.create(title='Майка вторая', slug='mayka-vtoraya', description='Специально для больших фанатов Star Wars компания Levis')
