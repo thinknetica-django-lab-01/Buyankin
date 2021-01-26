@@ -74,7 +74,7 @@ class Product(models.Model):
     sell = models.IntegerField(default=0, verbose_name='Кол-во продаж')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, related_name='products')
     tags = models.ManyToManyField(Tags, blank=True, related_name='products')
-    price = models.IntegerField(default=0, verbose_name='Стоимость')
+    price = models.IntegerField(default=0, blank=False, verbose_name='Стоимость')
 
     def __str__(self):
         return self.title
