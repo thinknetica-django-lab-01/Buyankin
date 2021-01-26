@@ -8,28 +8,17 @@ Category
 title 
 slug
 
-
 Tags
 -------
 title 
 slug
 
-<<<<<<< HEAD
-class Shop(models.Model):
-    product = models.CharField(max_length=100, verbose_name = 'Навание товара')
-    description = models.TextField(blank=True)
-    seller = models.CharField(max_length=100, verbose_name = 'Имя продавца')
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
-    tags = models.ForeignKey('Tags', on_delete=models.PROTECT, null=True)
-    price = models.IntegerField(default=0, blank=False)
-=======
 Seller
 -------
 name
 description
 address
 bought
->>>>>>> 2_1_main_models
 
 Product
 -------
