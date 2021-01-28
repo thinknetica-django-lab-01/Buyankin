@@ -64,6 +64,9 @@ class Seller(models.Model):
     address = models.TextField(blank=True)
     bought = models.IntegerField(default=0, verbose_name='Кол-во покупок')
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     title = models.CharField(max_length=255, db_index=True, verbose_name='Название товара')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
