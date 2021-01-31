@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% load shop_extras %}
 
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
     <div class="starter-template text-center py-5 px-3">
         <h1>Bootstrap starter template Hi {{ user }}</h1>
+        <h3>{% now "jS F Y H:i" %} {{ hi_world|slice:"::-1"}}</h3>
+        <h3>{% server_time "%Y-%m-%d %I:%M %p" %} {% reverse %}'Привет Мир!'{% endreverse %}</h3>
         <p class="lead">Use this document as a way to quickly start any new project.
             <br> All you get is this text and a mostly barebones HTML document.
                 {% if turn_on_block %}
