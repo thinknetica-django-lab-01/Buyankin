@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from .models import Product, Seller
 
@@ -14,3 +15,15 @@ def index(request):
         'hi_world': 'Привет Мир!'
     }
     return render(request, 'shop/index.html', context=context)
+#
+# def goods(request):
+#     product = Product.objects.all()
+#     context = {
+#         'product': product,
+#         'title': 'Список всех товаров'
+#     }
+#     return render(request, 'shop/goods.html', context=context)
+
+class GoodsList(ListView):
+    model = Product
+    template_name = 'shop/goods.html'

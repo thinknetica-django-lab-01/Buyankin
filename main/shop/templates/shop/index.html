@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load shop_extras %}
 
 {% block title %}Главная страница{% endblock %}
@@ -50,7 +50,7 @@
                       </div>
                     </div>
                 {% else %}
-
+                        Oops.. Что-то пошло не так.
                 {% endif %}
         </div>
         </p>
@@ -65,7 +65,7 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
-                        <h3><p class="card-text">{{ item.title }}</p></h3>
+                        <h3><p class="card-text"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p></h3>
                       <p class="card-text">{{ item.description }}</p><br>
                         <p class="card-text">Категория: {{ item.category }}</p>
                       <div class="d-flex justify-content-between align-items-center">
