@@ -65,13 +65,13 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
-                        <h3><p class="card-text"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p></h3>
+                        <h3><p class="card-text"><a href="{% url 'goods-detail' item.pk %}">{{ item.title|truncatewords:4 }}</a></p></h3>
                       <p class="card-text">{{ item.description|truncatewords:20  }}</p><br>
                         <p class="card-text">Категория: {{ item.category }}</p>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
 
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
                         </div>
                            <a href="#" class="btn btn-primary">{{ item.price }} руб.</a>
                       </div>

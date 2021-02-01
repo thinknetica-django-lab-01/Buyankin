@@ -22,6 +22,8 @@ Category.objects.all()
 from shop.models import Tags
 tags1 = Tags.objects.create(title='Распродажа', slug='sale')
 tags2 = Tags.objects.create(title='Новинки', slug='new')
+tags3 = Tags.objects.create(title='Возможна экспресс-доставка', slug='express')
+tags4 = Tags.objects.create(title='Прошлая коллекция', slug='old')
 Tags.objects.filter(title='Распродажа')
 Tags.objects.order_by('title')
 
