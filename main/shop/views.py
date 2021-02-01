@@ -23,12 +23,12 @@ class GoodsList(ListView):
     paginate_by = 10
     template_name = 'shop/goods.html'
 
-    def listing(request):
-        contact_list = Product.objects.all()
-        paginator = Paginator(contact_list, 10)  # Show 10 goods per page.
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        return render(request, 'shop/goods.html', {'page_obj': page_obj})
+    # def listing(request):
+    #     contact_list = Product.objects.all()
+    #     paginator = Paginator(contact_list, 10)  # Show 10 goods per page.
+    #     page_number = request.GET.get('page')
+    #     page_obj = paginator.get_page(page_number)
+    #     return render(request, 'shop/goods.html', {'page_obj': page_obj})
 
 class GoodsDetail(DetailView):
     model = Product
