@@ -24,18 +24,11 @@ class GoodsList(ListView):
     template_name = 'shop/goods.html'
     tags = Tags.objects.all()
 
-    # def get_queryset(self, **kwargs):
-    #     tag = self.request.GET.get('tag')
-    #     if tag:
-    #         return Product.objects.filter(tag_product__title_tag=tag)
-    #     return super().get_queryset(**kwargs)
-    #
-    # def context_data(self, **kwargs):
-    #     context = super(self).get_context_data(**kwargs)
-    #     my_tag = self.request.GET.get('tag')
-    #     if my_tag:
-    #         context['tag'] = my_tag
-    #     return context
+    def get_queryset(self, **kwargs):
+        tag = self.request.GET.get('tag')
+        if tag:
+            return Product.objects.filter(tags__title=tag)
+        return super().get_queryset(**kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
