@@ -64,6 +64,8 @@ class Seller(models.Model):
     description = models.TextField(blank=True)
     address = models.TextField(blank=True)
     bought = models.IntegerField(default=0, verbose_name='Кол-во покупок')
+    date_of_birth = models.DateField(null=True, blank=True)
+    e_mail = models.EmailField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name
@@ -77,7 +79,7 @@ class Product(models.Model):
     views = models.IntegerField(default=0, verbose_name='Кол-во просмотров')
     sell = models.IntegerField(default=0, verbose_name='Кол-во продаж')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, related_name='products')
-    tags = models.ManyToManyField(Tags, blank=True, related_name='products')
+    tags = models.ManyToManyField(Tags, related_name='tags')
     price = models.IntegerField(default=0, blank=False, verbose_name='Стоимость')
 
     def __str__(self):
