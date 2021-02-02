@@ -10,6 +10,7 @@ def index(request):
         'product': product,
         'title': 'Список',
         'turn_on_block': turn_on_block,
-        'name_seller': name_seller
+        'name_seller': name_seller,
+        'hi_world': 'Привет Мир!'
     }
     return render(request, 'shop/index.html', context=context)
