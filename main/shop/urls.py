@@ -3,7 +3,7 @@ from .views import *
 from django.contrib.flatpages import views
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('goods/', GoodsList.as_view(), name='goods'),
     path('goods/<int:pk>/', GoodsDetail.as_view(), name='goods-detail'),
     path('<path:url>', views.flatpage),
