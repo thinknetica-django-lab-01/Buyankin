@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 class IndexView(TemplateView):
@@ -44,3 +46,18 @@ class GoodsDetail(DetailView):
         # Add in a QuerySet
         context['tags_list'] = Tags.objects.all()
         return context
+
+
+class ProfileCreate(CreateView):
+    model = Seller
+    fields = '__all__'
+
+
+class ProfileUpdate(UpdateView):
+    model = Seller
+    fields = ['name','description','address','date_of_birth']
+
+
+class ProfileDelete(DeleteView):
+    model = Seller
+    success_url = reverse_lazy('seller')
