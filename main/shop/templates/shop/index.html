@@ -52,8 +52,9 @@
                 {% else %}
                         Oops.. Что-то пошло не так.
                 {% endif %}
-        </div>
         </p>
+    </div>
+
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for item in product %}
@@ -65,13 +66,13 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
-                        <h3><p class="card-text"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p></h3>
+                        <h3><p class="card-text"><a href="{% url 'goods-detail' item.pk %}">{{ item.title|truncatewords:4 }}</a></p></h3>
                       <p class="card-text">{{ item.description|truncatewords:20  }}</p><br>
                         <p class="card-text">Категория: {{ item.category }}</p>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
 
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
                         </div>
                            <a href="#" class="btn btn-primary">{{ item.price }} руб.</a>
                       </div>
@@ -81,5 +82,25 @@
                 </div>
                 {% endfor %}
             </div>
+
+            <div class="col-md-2">
+            {% for item in tags %}
+            <p class="card-text">{{ item.title }}</p>
+            {% endfor %}
+            <ul class="list-group">
+                 {% for item in tags %}
+                    {% if item.title == p %}
+                        <li class="list-group-item active" aria-current="true"><a class="page-link" href="?tags={{ p }}">{{ p }}</a></li>
+                    {% else %}
+                        <li class="list-group-item"><a class="page-link" href="?tags={{ p }}">{{ p }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% for tag in tags %}
+                <a href="?tag={{tag.tags}}"> {{ tag.title }}</a>
+
+                {%  endfor %}
+            </ul>
+        </div>
+
         </div>
 {% endblock %}

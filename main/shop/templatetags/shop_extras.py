@@ -3,8 +3,14 @@ import datetime
 
 register = template.Library()
 
+
 @register.tag(name="reverse")
 def reverse_string(parser, token):
+    """
+    :param parser:
+    :param token:
+    :return: Данный тег выводит строку данных в обратном порядке
+    """
     nodelist = parser.parse(('endreverse',))
     parser.delete_first_token()
     return ReverseNode(nodelist)
@@ -19,6 +25,12 @@ class ReverseNode(template.Node):
 
 @register.tag(name="server_time")
 def do_current_time(parser, token):
+    """
+
+    :param parser:
+    :param token:
+    :return: Вывод времени сервера
+    """
     try:
         # split_contents() knows not to split quoted strings.
         tag_name, format_string = token.split_contents()

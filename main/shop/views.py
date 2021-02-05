@@ -1,25 +1,39 @@
 from django.shortcuts import render
-from django.views.generic import ListView
-from django.views.generic import DetailView
-
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
-def index(request):
-    product = Product.objects.all()
-    turn_on_block = True
-    name_seller = Seller.objects.get(name='Иван').name
-    context = {
-        'product': product,
-        'title': 'Список',
-        'turn_on_block': turn_on_block,
-        'name_seller': name_seller,
-        'hi_world': 'Привет Мир!'
-    }
-    return render(request, 'shop/index.html', context=context)
+
+class IndexView(TemplateView):
+    model = Product
+    paginate_by = 10
+    context_object_name = 'product'
+    template_name = 'shop/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['product'] = Product.objects.all()[:5]
+        return context
+
 
 class GoodsList(ListView):
     model = Product
+    paginate_by = 10
     template_name = 'shop/goods.html'
+    tags = Tags.objects.all()
+
+    def get_queryset(self, **kwargs):
+        tag = self.request.GET.get('tag')
+        if tag:
+            return Product.objects.filter(tags__title=tag)
+        return super().get_queryset(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['tags'] = Tags.objects.all()
+        return data
+
 
 class GoodsDetail(DetailView):
     model = Product
@@ -29,6 +43,21 @@ class GoodsDetail(DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(GoodsDetail, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        # Add in a QuerySet
         context['tags_list'] = Tags.objects.all()
         return context
+
+
+class ProfileCreate(CreateView):
+    model = Seller
+    fields = '__all__'
+
+
+class ProfileUpdate(UpdateView):
+    model = Seller
+    fields = ['name','description','address','date_of_birth']
+
+
+class ProfileDelete(DeleteView):
+    model = Seller
+    success_url = reverse_lazy('seller')
