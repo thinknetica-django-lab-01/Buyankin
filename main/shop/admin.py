@@ -20,7 +20,6 @@ admin.site.register(FlatPage,FlatPageAdmin)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "category")
     list_filter = ("tags",)
-    pass
 
 
 @admin.register(Seller)

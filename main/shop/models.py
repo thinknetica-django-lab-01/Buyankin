@@ -70,6 +70,9 @@ class Seller(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('profile_update', kwargs={'pk': self.pk})
+
 class Product(models.Model):
     title = models.CharField(max_length=255, db_index=True, verbose_name='Название товара')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
