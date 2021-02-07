@@ -2,7 +2,9 @@ from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .forms import UpdateProfile
+from .forms import UpdateProfile, UpdateGoods
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.contrib import messages
 
 
 class IndexView(TemplateView):
@@ -57,7 +59,7 @@ class ProfileCreate(CreateView):
     fields = '__all__'
 
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Seller
     success_url = '/'
     template_name = 'shop/seller_form.html'
@@ -71,3 +73,32 @@ class ProfileUpdate(UpdateView):
 class ProfileDelete(DeleteView):
     model = Seller
     success_url = reverse_lazy('seller')
+
+
+class GoodsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Product
+    form_class = UpdateGoods
+    permission_required = ("main.add_goods", "main.change_goods")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Сохранено")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Сохранение не удалось!")
+        return super().form_invalid(form)
+
+class GoodsUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Product
+    success_url = '/'
+    template_name = 'shop/product_form.html'
+    form_class = UpdateGoods
+    permission_required = ("main.add_goods", "main.change_goods")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Сохранено")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Сохранение не удалось!")
+        return super().form_invalid(form)
