@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from .forms import UpdateProfile
 
 
 class IndexView(TemplateView):
@@ -10,6 +10,7 @@ class IndexView(TemplateView):
     paginate_by = 10
     context_object_name = 'product'
     template_name = 'shop/index.html'
+
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -23,11 +24,13 @@ class GoodsList(ListView):
     template_name = 'shop/goods.html'
     tags = Tags.objects.all()
 
+
     def get_queryset(self, **kwargs):
         tag = self.request.GET.get('tag')
         if tag:
             return Product.objects.filter(tags__title=tag)
         return super().get_queryset(**kwargs)
+
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -39,6 +42,7 @@ class GoodsDetail(DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'shop/goods_detail.html'
+
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -55,7 +59,13 @@ class ProfileCreate(CreateView):
 
 class ProfileUpdate(UpdateView):
     model = Seller
-    fields = ['name','description','address','date_of_birth']
+    success_url = '/'
+    template_name = 'shop/seller_form.html'
+    form_class = UpdateProfile
+
+
+    def get_object(self):
+        return self.request.user
 
 
 class ProfileDelete(DeleteView):
