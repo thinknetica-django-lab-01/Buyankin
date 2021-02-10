@@ -3,7 +3,6 @@ from .models import Product, Seller, Tags
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import UpdateProfile, UpdateGoods
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib import messages
 
 
@@ -26,13 +25,11 @@ class GoodsList(ListView):
     template_name = 'shop/goods.html'
     tags = Tags.objects.all()
 
-
     def get_queryset(self, **kwargs):
         tag = self.request.GET.get('tag')
         if tag:
             return Product.objects.filter(tags__title=tag)
         return super().get_queryset(**kwargs)
-
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -44,7 +41,6 @@ class GoodsDetail(DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'shop/goods_detail.html'
-
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -59,12 +55,11 @@ class ProfileCreate(CreateView):
     fields = '__all__'
 
 
-class ProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ProfileUpdate(UpdateView):
     model = Seller
     success_url = '/'
     template_name = 'shop/seller_form.html'
     form_class = UpdateProfile
-
 
     def get_object(self):
         return self.request.user
@@ -75,7 +70,7 @@ class ProfileDelete(DeleteView):
     success_url = reverse_lazy('seller')
 
 
-class GoodsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class GoodsCreate(CreateView):
     model = Product
     form_class = UpdateGoods
     permission_required = ("main.add_goods", "main.change_goods")
@@ -88,7 +83,8 @@ class GoodsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         messages.error(self.request, "Сохранение не удалось!")
         return super().form_invalid(form)
 
-class GoodsUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+
+class GoodsUpdate(UpdateView):
     model = Product
     success_url = '/'
     template_name = 'shop/product_form.html'
