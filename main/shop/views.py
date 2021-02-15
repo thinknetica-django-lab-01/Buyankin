@@ -1,9 +1,11 @@
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import UpdateProfile, UpdateGoods
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
 
 class IndexView(TemplateView):
@@ -98,3 +100,20 @@ class GoodsUpdate(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, "Сохранение не удалось!")
         return super().form_invalid(form)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрировались')
+            return redirect('login')
+        else:
+            messages.error(request, 'Ошибка регистрации')
+    else:
+        form = UserCreationForm()
+    return render(request, 'shop/register.html', {'form': form})
+
+def user_login(request):
+    return render(request, 'shop/login.html')
