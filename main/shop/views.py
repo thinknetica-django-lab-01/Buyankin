@@ -54,12 +54,12 @@ class GoodsDetail(DetailView):
         context['tags_list'] = Tags.objects.all()
         return context
 
-
+# @login_required(redirect_field_name='login')
 class ProfileCreate(CreateView):
     model = Seller
     fields = '__all__'
 
-# @login_required
+
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Seller
     success_url = '/'
