@@ -3,9 +3,12 @@ from django.views.generic import TemplateView, ListView, DetailView
 from .models import Product, Seller, Tags
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .forms import UpdateProfile, UpdateGoods
+from .forms import UpdateProfile, UpdateGoods, UserRegisterForm, UserLoginForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.contrib.auth import login, logout
 
 
 class IndexView(TemplateView):
@@ -56,8 +59,8 @@ class ProfileCreate(CreateView):
     model = Seller
     fields = '__all__'
 
-
-class ProfileUpdate(UpdateView):
+# @login_required
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Seller
     success_url = '/'
     template_name = 'shop/seller_form.html'
@@ -67,7 +70,7 @@ class ProfileUpdate(UpdateView):
         return self.request.user
 
 
-class ProfileDelete(DeleteView):
+class ProfileDelete(LoginRequiredMixin, DeleteView):
     model = Seller
     success_url = reverse_lazy('seller')
 
@@ -104,16 +107,29 @@ class GoodsUpdate(UpdateView):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            login(request, user)
             messages.success(request, 'Вы успешно зарегистрировались')
-            return redirect('login')
+            return redirect('index')
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'shop/register.html', {'form': form})
 
 def user_login(request):
-    return render(request, 'shop/login.html')
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserLoginForm()
+    return render(request, 'shop/login.html', {'form': form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
