@@ -1,5 +1,5 @@
 from django import forms
-from .models import Seller
+from .models import Seller, Product
 from django.core.exceptions import ValidationError
 
 class UpdateProfile(forms.ModelForm):
@@ -13,3 +13,10 @@ class UpdateProfile(forms.ModelForm):
     class Meta:
         model = Seller
         fields = '__all__'
+
+
+class UpdateGoods(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        exclude = ["title", "slug"]

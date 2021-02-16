@@ -13,4 +13,6 @@ urlpatterns = [
     path('accounts/profile/create/', ProfileCreate.as_view(), name='profile_create'),
     path('accounts/profile/<int:pk>/update/', ProfileUpdate.as_view(), name='profile_update'),
     path('accounts/profile/<int:pk>/delete/', ProfileDelete.as_view(), name='profile_delete'),
+    path('goods/add', GoodsCreate.as_view(), name='goods_create'),
+    path('goods/<int:pk>/edit/', GoodsUpdate.as_view(), name='goods_update'),
 ]
