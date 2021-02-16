@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib.auth import login, logout
-
+from django.contrib.auth.models import User
 
 class IndexView(TemplateView):
     model = Product
@@ -54,11 +54,9 @@ class GoodsDetail(DetailView):
         context['tags_list'] = Tags.objects.all()
         return context
 
-# @login_required(redirect_field_name='login')
 class ProfileCreate(CreateView):
     model = Seller
     fields = '__all__'
-
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Seller
