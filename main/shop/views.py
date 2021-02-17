@@ -101,33 +101,3 @@ class GoodsUpdate(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, "Сохранение не удалось!")
         return super().form_invalid(form)
-
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            login(request, user)
-            messages.success(request, 'Вы успешно зарегистрировались')
-            return redirect('index')
-        else:
-            messages.error(request, 'Ошибка регистрации')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'shop/register.html', {'form': form})
-
-def user_login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('index')
-    else:
-        form = UserLoginForm()
-    return render(request, 'shop/login.html', {'form': form})
-
-def user_logout(request):
-    logout(request)
-    return redirect('login')
