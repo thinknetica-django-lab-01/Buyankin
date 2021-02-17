@@ -16,9 +16,5 @@ urlpatterns = [
     path('goods/add', GoodsCreate.as_view(), name='goods_create'),
     path('goods/<int:pk>/edit/', GoodsUpdate.as_view(), name='goods_update'),
 
-    path('register/', register, name='register'),
-    path('login/', user_login, name='login'),
-    path('logout/', user_logout, name='logout'),
-
     path('accounts/', include('allauth.urls')),
 ]
