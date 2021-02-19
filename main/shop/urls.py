@@ -2,7 +2,6 @@ from django.urls import path, include
 from .views import *
 from django.contrib.flatpages import views
 
-
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('goods/', GoodsList.as_view(), name='goods'),

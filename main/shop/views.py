@@ -11,12 +11,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, 
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 
+
 class IndexView(TemplateView):
     model = Product
     paginate_by = 10
     context_object_name = 'product'
     template_name = 'shop/index.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -54,9 +54,11 @@ class GoodsDetail(DetailView):
         context['tags_list'] = Tags.objects.all()
         return context
 
+
 class ProfileCreate(CreateView):
     model = Seller
     fields = '__all__'
+
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Seller
