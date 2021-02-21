@@ -15,7 +15,6 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <a href="{% url 'social:begin' 'google-oauth2' %}"><img src="/static/lgoogle.png" class="avatar-3" data-toggle="tooltip" title="{% trans 'Login via Google+' %}"></a>
 
   <button type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>

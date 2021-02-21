@@ -15,9 +15,11 @@ def reverse_string(parser, token):
     parser.delete_first_token()
     return ReverseNode(nodelist)
 
+
 class ReverseNode(template.Node):
     def __init__(self, nodelist):
         self.nodelist = nodelist
+
     def render(self, context):
         output = self.nodelist.render(context)
         return output[::-1]
@@ -43,6 +45,7 @@ def do_current_time(parser, token):
             "%r tag's argument should be in quotes" % tag_name
         )
     return CurrentTimeNode(format_string[1:-1])
+
 
 class CurrentTimeNode(template.Node):
     def __init__(self, format_string):

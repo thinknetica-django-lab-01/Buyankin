@@ -2,7 +2,6 @@ from django.urls import path, include
 from .views import *
 from django.contrib.flatpages import views
 
-
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('goods/', GoodsList.as_view(), name='goods'),
@@ -16,5 +15,5 @@ urlpatterns = [
     path('goods/add', GoodsCreate.as_view(), name='goods_create'),
     path('goods/<int:pk>/edit/', GoodsUpdate.as_view(), name='goods_update'),
 
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls'), ),
 ]
