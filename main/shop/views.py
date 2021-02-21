@@ -9,7 +9,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib.auth import login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class IndexView(TemplateView):
@@ -73,6 +76,20 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 class ProfileDelete(LoginRequiredMixin, DeleteView):
     model = Seller
     success_url = reverse_lazy('seller')
+
+
+def get_common_users_group():
+    common_users, created = Group.objects.get_or_create(name="common_users")
+    if created:
+        common_users.permissions.set(
+            list(Permission.objects.filter(codename__icontains="seller").exclude(codename__startswith="delete")))
+    return common_users
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        instance.groups.add(get_common_users_group())
 
 
 class GoodsCreate(CreateView):
